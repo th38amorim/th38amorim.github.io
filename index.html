@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thiago Amorim · Desenvolvedor Mobile Sênior</title>
+<meta name="description" content="Desenvolvedor mobile sênior, 6 anos em Flutter. Aplicativos publicados e mantidos em produção nos setores financeiro, de energia e de varejo.">
+<meta name="author" content="Thiago Amorim">
+<meta name="theme-color" content="#E9EBEF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111419" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://th38amorim.github.io/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Thiago Amorim">
+<meta property="og:title" content="Thiago Amorim · Desenvolvedor Mobile Sênior">
+<meta property="og:description" content="Seis anos construindo, publicando e mantendo apps em Flutter. Bancos digitais, concessionárias de energia, varejo e produto próprio.">
+<meta property="og:url" content="https://th38amorim.github.io/">
+<meta property="og:image" content="https://th38amorim.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Thiago Amorim · Desenvolvedor Mobile Sênior">
+<meta name="twitter:description" content="Seis anos construindo, publicando e mantendo apps em Flutter.">
+<meta name="twitter:image" content="https://th38amorim.github.io/og.png">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23111419'/%3E%3Ctext x='50' y='71' font-size='62' font-family='Georgia,serif' font-weight='700' fill='%23DD9A4C' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<style>
+  /* ---------------- tokens: light is the base ---------------- */
+  :root {
+    --paper:      #E9EBEF;
+    --raised:     #F4F5F8;
+    --ink:        #14171C;
+    --ink-soft:   #3C434E;
+    --muted:      #6B7482;
+    --hair:       #C9CED7;
+    --hair-soft:  #D8DCE3;
+    --accent:     #9A5A16;
+    --accent-ink: #7E4910;
+    --on-accent:  #FFF8EF;
+    --shadow:     0 1px 2px rgba(20, 23, 28, .06), 0 8px 24px rgba(20, 23, 28, .05);
+
+    --display: Georgia, "Times New Roman", serif;
+    --body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    --measure: 64ch;
+    --rail: 260px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #111419;
+      --raised:     #181C23;
+      --ink:        #E9EBEF;
+      --ink-soft:   #C2C8D2;
+      --muted:      #8A93A1;
+      --hair:       #2A303A;
+      --hair-soft:  #232830;
+      --accent:     #DD9A4C;
+      --accent-ink: #EBAF66;
+      --on-accent:  #17130C;
+      --shadow:     0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .3);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #111419;
+    --raised:     #181C23;
+    --ink:        #E9EBEF;
+    --ink-soft:   #C2C8D2;
+    --muted:      #8A93A1;
+    --hair:       #2A303A;
+    --hair-soft:  #232830;
+    --accent:     #DD9A4C;
+    --accent-ink: #EBAF66;
+    --on-accent:  #17130C;
+    --shadow:     0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .3);
+  }
+
+  /* ---------------- base ---------------- */
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-ink); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; }
+
+  p { margin: 0; max-width: var(--measure); }
+
+  /* ---------------- shell ---------------- */
+  .shell {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    gap: 0 64px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------------- left rail ---------------- */
+  .rail { position: relative; }
+
+  .rail-inner {
+    position: sticky;
+    top: 0;
+    padding: 72px 0 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .wordmark {
+    font-family: var(--display);
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: -.01em;
+  }
+
+  .rule { width: 28px; height: 2px; background: var(--accent); }
+
+  .rail-role {
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.9;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+
+  nav a {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .04em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  nav a:hover { color: var(--ink); text-decoration: none; }
+
+  .rail-foot {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    line-height: 1.9;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* ---------------- main flow ---------------- */
+  main { padding: 72px 0 96px; display: flex; flex-direction: column; gap: 68px; }
+
+  section { display: flex; flex-direction: column; gap: 22px; scroll-margin-top: 32px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--hair); }
+
+  /* hero */
+  .hero h1 {
+    font-size: clamp(34px, 5.2vw, 52px);
+    line-height: 1.08;
+    letter-spacing: -.018em;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent-ink); }
+
+  .lede { font-size: 18.5px; line-height: 1.58; color: var(--ink-soft); }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: .04em;
+    padding: 11px 17px;
+    border: 1px solid var(--hair);
+    border-radius: 2px;
+    color: var(--ink);
+    background: var(--raised);
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent-ink); text-decoration: none; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .btn.primary:hover { color: var(--on-accent); opacity: .88; }
+
+  /* metrics */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    border-top: 1px solid var(--hair);
+    border-left: 1px solid var(--hair);
+  }
+  .metric {
+    padding: 18px 20px;
+    border-right: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+  }
+  .metric b {
+    display: block;
+    font-family: var(--display);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .metric span {
+    display: block;
+    margin-top: 5px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.5;
+    letter-spacing: .04em;
+    color: var(--muted);
+  }
+
+  /* offers */
+  .offers { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .offer {
+    background: var(--raised);
+    border: 1px solid var(--hair-soft);
+    border-radius: 3px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .offer h3 { font-size: 18px; letter-spacing: -.01em; }
+  .offer p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
+
+  /* cases */
+  .cases { display: flex; flex-direction: column; gap: 0; }
+  .case { padding: 26px 0; border-top: 1px solid var(--hair); display: flex; flex-direction: column; gap: 14px; }
+  .case:last-child { border-bottom: 1px solid var(--hair); }
+
+  .case-head { display: flex; flex-direction: column; gap: 6px; }
+  .case-head h3 { font-size: 25px; letter-spacing: -.012em; }
+  .case-meta {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .04em;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+  .case-meta span::before { content: "· "; color: var(--hair); }
+  .case-meta span:first-child::before { content: none; }
+
+  .case-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 18px; }
+  .block { display: flex; flex-direction: column; gap: 5px; }
+  .block h4 {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+  .block p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
+
+  /* compact app list */
+  .apps { display: flex; flex-direction: column; }
+  .app {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--hair-soft);
+  }
+  .app:first-child { border-top: 1px solid var(--hair-soft); }
+  .app b { font-size: 15.5px; font-weight: 600; min-width: 168px; }
+  .app span { font-size: 14.5px; color: var(--ink-soft); flex: 1; min-width: 210px; }
+  .app i {
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: .04em;
+    color: var(--muted);
+  }
+
+  /* stack */
+  .stack { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .02em;
+    padding: 5px 11px;
+    border: 1px solid var(--hair);
+    border-radius: 2px;
+    color: var(--ink-soft);
+  }
+
+  /* timeline */
+  .track { display: flex; flex-direction: column; }
+  .stop {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    gap: 4px 20px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--hair-soft);
+  }
+  .stop:first-child { border-top: 1px solid var(--hair-soft); }
+  .stop time {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .03em;
+    color: var(--muted);
+    padding-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stop div { display: flex; flex-direction: column; gap: 2px; }
+  .stop b { font-size: 15.5px; font-weight: 600; }
+  .stop span { font-size: 14.5px; color: var(--ink-soft); }
+
+  /* contact */
+  .contact p { font-size: 17px; color: var(--ink-soft); }
+
+  footer {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .04em;
+    color: var(--muted);
+    border-top: 1px solid var(--hair);
+    padding-top: 18px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* ---------------- responsive ---------------- */
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; gap: 0; padding: 0 24px; }
+    .rail-inner { position: static; padding: 44px 0 0; gap: 20px; }
+    nav { display: none; }
+    main { padding: 40px 0 64px; gap: 52px; }
+    .stop { grid-template-columns: 1fr; gap: 2px; }
+    .stop time { padding-top: 0; }
+    .app b { min-width: 0; flex-basis: 100%; }
+  }
+</style>
+
+<div class="shell">
+
+  <div class="rail">
+    <div class="rail-inner">
+      <div>
+        <div class="wordmark">Thiago<br>Amorim</div>
+        <div class="rule" style="margin:12px 0 10px"></div>
+        <div class="rail-role">Desenvolvedor<br>mobile sênior<br>Flutter · iOS · Android</div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#atuacao">Atuação</a></li>
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#trajetoria">Trajetória</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="rail-foot">
+        <div>Praia Grande, SP</div>
+        <div>Brasil · UTC−3</div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <section class="hero">
+      <h1>Aplicativos que precisam <em>sobreviver</em> ao lançamento.</h1>
+      <p class="lede">Seis anos construindo, publicando e mantendo apps em Flutter. Bancos digitais, concessionárias de energia, varejo e produto próprio. Do primeiro commit à versão que sobe na loja pela ducentésima vez.</p>
+      <div class="actions">
+        <a class="btn primary" href="mailto:thiago.amorimsilva38@gmail.com">Falar comigo</a>
+        <a class="btn" href="https://www.linkedin.com/in/th38amorim" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/th38amorim" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="metrics">
+        <div class="metric"><b>6</b><span>anos em Flutter</span></div>
+        <div class="metric"><b>6</b><span>apps publicados<br>nas lojas</span></div>
+        <div class="metric"><b>200+</b><span>versões publicadas<br>no produto atual</span></div>
+        <div class="metric"><b>99%+</b><span>sessões sem falhas<br>no produto atual</span></div>
+      </div>
+    </section>
+
+    <section id="atuacao">
+      <div class="eyebrow">Atuação</div>
+      <div class="offers">
+        <div class="offer">
+          <h3>Assumir um app existente</h3>
+          <p>Código herdado de outro time ou de uma agência que saiu. Atualização de Flutter e dependências, correção de build quebrado, redução de crashes e retomada da cadência de entrega.</p>
+        </div>
+        <div class="offer">
+          <h3>Construir do zero até a loja</h3>
+          <p>Arquitetura, design system, gerenciamento de estado, integração com APIs e publicação em App Store e Google Play, com CI/CD e ambientes separados desde o primeiro dia.</p>
+        </div>
+        <div class="offer">
+          <h3>Evoluir e manter em produção</h3>
+          <p>Features novas, release contínuo, observabilidade e as exigências que Apple e Google criam a cada ano. A parte que começa depois que o app fica pronto.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projetos">
+      <div class="eyebrow">Projetos</div>
+
+      <div class="cases">
+
+        <article class="case">
+          <div class="case-head">
+            <h3>Copel</h3>
+            <div class="case-meta">
+              <span>Concessionária de energia</span>
+              <span>Android e iOS</span>
+              <span>2021 a 2022</span>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="block">
+              <h4>Contexto</h4>
+              <p>Aplicativo de uma concessionária de energia com milhões de clientes atendidos, em produção nas duas lojas. Os desenvolvedores seniores responsáveis deixaram o projeto.</p>
+            </div>
+            <div class="block">
+              <h4>O que foi feito</h4>
+              <p>Projeto assumido sozinho, com entregas e manutenção mantidas sem interrupção e reporte direto ao PO e às demais lideranças, além da transferência de contexto técnico para os desenvolvedores que chegaram depois.</p>
+            </div>
+            <div class="block">
+              <h4>Resultado</h4>
+              <p>Continuidade preservada em um app de missão crítica sem janela de parada, e promoção de júnior a pleno durante o período.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="case-head">
+            <h3>Left</h3>
+            <div class="case-meta">
+              <span>Banco digital</span>
+              <span>Android e iOS</span>
+              <span>2022 a 2025</span>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="block">
+              <h4>Contexto</h4>
+              <p>Operação bancária nova, sem aplicativo e sem stack definida. O produto precisava sair do papel e chegar às lojas com funcionalidades financeiras completas.</p>
+            </div>
+            <div class="block">
+              <h4>O que foi feito</h4>
+              <p>Participação desde a fundação da operação, na escolha das tecnologias e na definição dos padrões de desenvolvimento do time. Entrega de Pix, transferências, extrato e cuponagem, com code review e decisões de arquitetura como referência técnica.</p>
+            </div>
+            <div class="block">
+              <h4>Resultado</h4>
+              <p>Aplicativo publicado e em operação nas duas lojas, e progressão de pleno a sênior dentro do mesmo produto.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="case-head">
+            <h3>NaTrave!</h3>
+            <div class="case-meta">
+              <span>Produto próprio</span>
+              <span>Android e iOS</span>
+              <span>2024 até hoje</span>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="block">
+              <h4>Contexto</h4>
+              <p>Plataforma de gestão de campeonatos de futebol amador. Um único desenvolvedor responsável pelo aplicativo, pelos serviços que ele consome e pelas decisões de produto.</p>
+            </div>
+            <div class="block">
+              <h4>O que foi feito</h4>
+              <p>Arquitetura, design system e integração de ponta a ponta. Pipeline de CI/CD, flavors separados de desenvolvimento e produção nos dois sistemas, push notifications, remote config, login social, deep links e mapas. Serviços de backend em NestJS e TypeScript com PostgreSQL.</p>
+            </div>
+            <div class="block">
+              <h4>Resultado</h4>
+              <p>Mais de duzentas versões publicadas em App Store e Google Play ao longo de quase dois anos ininterruptos, com taxa de sessões sem falhas acima de 99%.</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="eyebrow">Outros aplicativos em produção</div>
+      <div class="apps">
+        <div class="app">
+          <b>Genial Investimentos</b>
+          <span>Plataforma de investimentos. Contribuição no módulo de câmbio.</span>
+          <i>Fintech</i>
+        </div>
+        <div class="app">
+          <b>Cabana Burger</b>
+          <span>Aplicativo de pedidos da rede. Evolução de features e manutenção.</span>
+          <i>Varejo</i>
+        </div>
+        <div class="app">
+          <b>Habib's</b>
+          <span>Aplicativo da rede. Evolução de features e manutenção.</span>
+          <i>Varejo</i>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="eyebrow">Stack</div>
+      <div class="stack">
+        <span class="chip">Flutter</span>
+        <span class="chip">Dart</span>
+        <span class="chip">iOS</span>
+        <span class="chip">Android</span>
+        <span class="chip">BLoC / Cubit</span>
+        <span class="chip">Clean Architecture</span>
+        <span class="chip">Firebase</span>
+        <span class="chip">CI/CD</span>
+        <span class="chip">App Store Connect</span>
+        <span class="chip">Google Play Console</span>
+        <span class="chip">APIs REST</span>
+        <span class="chip">NestJS</span>
+        <span class="chip">TypeScript</span>
+        <span class="chip">PostgreSQL</span>
+        <span class="chip">Git</span>
+      </div>
+      <p style="font-size:14.5px;color:var(--muted)">Backend quando o aplicativo depende dele. O foco continua sendo mobile.</p>
+    </section>
+
+    <section id="trajetoria">
+      <div class="eyebrow">Trajetória</div>
+      <div class="track">
+        <div class="stop">
+          <time>2024 — hoje</time>
+          <div><b>Desenvolvedor Mobile Sênior e Cofundador</b><span>NaTrave!</span></div>
+        </div>
+        <div class="stop">
+          <time>2023 — 2025</time>
+          <div><b>Desenvolvedor Mobile Sênior</b><span>Left</span></div>
+        </div>
+        <div class="stop">
+          <time>2022 — 2023</time>
+          <div><b>Desenvolvedor Mobile Pleno</b><span>Left</span></div>
+        </div>
+        <div class="stop">
+          <time>2022</time>
+          <div><b>Desenvolvedor Mobile Pleno</b><span>Datainfo, no aplicativo da Copel</span></div>
+        </div>
+        <div class="stop">
+          <time>2021 — 2022</time>
+          <div><b>Desenvolvedor Mobile Júnior</b><span>Datainfo, no aplicativo da Copel</span></div>
+        </div>
+        <div class="stop">
+          <time>2021</time>
+          <div><b>Desenvolvedor Mobile Júnior</b><span>Alphacode IT Solutions</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="contact">
+      <div class="eyebrow">Contato</div>
+      <p>Disponível para projetos de escopo definido e contratos de manutenção contínua, em regime de meio período. Conversas por texto são bem-vindas.</p>
+      <div class="actions">
+        <a class="btn primary" href="mailto:thiago.amorimsilva38@gmail.com">thiago.amorimsilva38@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/th38amorim" target="_blank" rel="noopener">linkedin.com/in/th38amorim</a>
+      </div>
+    </section>
+
+    <footer>Thiago Amorim · Desenvolvedor mobile sênior · Flutter, iOS e Android</footer>
+
+  </main>
+</div>
+
+</body>
+</html>
