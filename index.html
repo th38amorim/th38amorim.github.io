@@ -105,6 +105,26 @@
 
   p { margin: 0; max-width: var(--measure); }
 
+  /* ---------------- idioma ---------------- */
+  html[data-lang="pt"] [lang="en"] { display: none !important; }
+  html[data-lang="en"] [lang="pt"] { display: none !important; }
+
+  .langbtn {
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    padding: 5px 11px;
+    border: 1px solid var(--hair);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .langbtn:hover { border-color: var(--accent); color: var(--accent-ink); }
+  .langbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
   /* ---------------- shell ---------------- */
   .shell {
     display: grid;
@@ -409,6 +429,42 @@
   }
 </style>
 
+<script>
+(function () {
+  var KEY = 'tap-lang';
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  var lang = saved || ((navigator.language || 'en').toLowerCase().indexOf('pt') === 0 ? 'pt' : 'en');
+  apply(lang);
+
+  function apply(l) {
+    var r = document.documentElement;
+    r.setAttribute('data-lang', l);
+    r.lang = l === 'pt' ? 'pt-BR' : 'en';
+    document.title = l === 'pt'
+      ? 'Thiago Amorim \u00b7 Desenvolvedor Mobile S\u00eanior'
+      : 'Thiago Amorim \u00b7 Senior Mobile Developer';
+    var b = document.getElementById('langbtn');
+    if (b) {
+      b.textContent = l === 'pt' ? 'EN' : 'PT';
+      b.setAttribute('aria-label', l === 'pt' ? 'Switch to English' : 'Mudar para portugu\u00eas');
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || t.id !== 'langbtn') return;
+    var next = document.documentElement.getAttribute('data-lang') === 'pt' ? 'en' : 'pt';
+    try { localStorage.setItem(KEY, next); } catch (err) {}
+    apply(next);
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    apply(document.documentElement.getAttribute('data-lang'));
+  });
+})();
+</script>
+
 <div class="shell">
 
   <div class="rail">
@@ -416,22 +472,30 @@
       <div>
         <div class="wordmark">Thiago<br>Amorim</div>
         <div class="rule" style="margin:12px 0 10px"></div>
-        <div class="rail-role">Desenvolvedor<br>mobile sênior<br>Flutter · iOS · Android</div>
+        <div class="rail-role" lang="pt">Desenvolvedor<br>mobile sênior<br>Flutter · iOS · Android</div>
+        <div class="rail-role" lang="en">Senior<br>mobile developer<br>Flutter · iOS · Android</div>
       </div>
+
+      <button type="button" id="langbtn" class="langbtn">EN</button>
 
       <nav>
         <ul>
-          <li><a href="#atuacao">Atuação</a></li>
-          <li><a href="#projetos">Projetos</a></li>
+          <li lang="pt"><a href="#atuacao">Atuação</a></li>
+          <li lang="en"><a href="#atuacao">What I do</a></li>
+          <li lang="pt"><a href="#projetos">Projetos</a></li>
+          <li lang="en"><a href="#projetos">Projects</a></li>
           <li><a href="#stack">Stack</a></li>
-          <li><a href="#trajetoria">Trajetória</a></li>
-          <li><a href="#contato">Contato</a></li>
+          <li lang="pt"><a href="#trajetoria">Trajetória</a></li>
+          <li lang="en"><a href="#trajetoria">Timeline</a></li>
+          <li lang="pt"><a href="#contato">Contato</a></li>
+          <li lang="en"><a href="#contato">Contact</a></li>
         </ul>
       </nav>
 
       <div class="rail-foot">
         <div>Praia Grande, SP</div>
-        <div>Brasil · UTC−3</div>
+        <div lang="pt">Brasil · UTC−3</div>
+        <div lang="en">Brazil · UTC−3</div>
       </div>
     </div>
   </div>
@@ -439,10 +503,13 @@
   <main>
 
     <section class="hero">
-      <h1>Aplicativos que precisam <em>sobreviver</em> ao lançamento.</h1>
-      <p class="lede">Seis anos construindo, publicando e mantendo apps em Flutter. Bancos digitais, concessionárias de energia, varejo e produto próprio. Do primeiro commit à versão que sobe na loja pela ducentésima vez.</p>
+      <h1 lang="pt">Aplicativos que precisam <em>sobreviver</em> ao lançamento.</h1>
+      <h1 lang="en">Apps that have to <em>survive</em> their launch.</h1>
+      <p class="lede" lang="pt">Seis anos construindo, publicando e mantendo apps em Flutter. Bancos digitais, concessionárias de energia, varejo e produto próprio. Do primeiro commit à versão que sobe na loja pela ducentésima vez.</p>
+      <p class="lede" lang="en">Six years building, shipping and maintaining Flutter apps. Digital banking, energy utilities, retail and my own product. From the first commit to the two hundredth release on the store.</p>
       <div class="actions">
-        <a class="btn primary" href="mailto:thiago.amorimsilva38@gmail.com">Falar comigo</a>
+        <a class="btn primary" lang="pt" href="mailto:thiago.amorimsilva38@gmail.com">Falar comigo</a>
+        <a class="btn primary" lang="en" href="mailto:thiago.amorimsilva38@gmail.com">Get in touch</a>
         <a class="btn" href="https://www.linkedin.com/in/th38amorim" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://github.com/th38amorim" target="_blank" rel="noopener">GitHub</a>
       </div>
@@ -456,39 +523,48 @@
         <img src="assets/left-icon.png" alt="Ícone do Left" width="160" height="160">
         <img src="assets/genial-icon.png" alt="Ícone da Genial Investimentos" width="160" height="160">
         <img src="assets/cabana-icon.png" alt="Ícone do Cabana Burger" width="160" height="160">
-        <p>Cinco aplicativos publicados e mantidos em produção.</p>
+        <p lang="pt">Cinco aplicativos publicados e mantidos em produção.</p>
+        <p lang="en">Five apps published and maintained in production.</p>
       </div>
     </section>
 
     <section>
       <div class="metrics">
-        <div class="metric"><b>6</b><span>anos em Flutter</span></div>
-        <div class="metric"><b>6</b><span>apps publicados<br>nas lojas</span></div>
-        <div class="metric"><b>200+</b><span>versões publicadas<br>no produto atual</span></div>
-        <div class="metric"><b>99%+</b><span>sessões sem falhas<br>no produto atual</span></div>
+        <div class="metric"><b>6</b><span lang="pt">anos em Flutter</span><span lang="en">years in Flutter</span></div>
+        <div class="metric"><b>6</b><span lang="pt">apps publicados<br>nas lojas</span><span lang="en">apps published<br>to the stores</span></div>
+        <div class="metric"><b>200+</b><span lang="pt">versões publicadas<br>no produto atual</span><span lang="en">releases on<br>my current product</span></div>
+        <div class="metric"><b>99%+</b><span lang="pt">sessões sem falhas<br>no produto atual</span><span lang="en">crash-free sessions<br>on my current product</span></div>
       </div>
     </section>
 
     <section id="atuacao">
-      <div class="eyebrow">Atuação</div>
+      <div class="eyebrow" lang="pt">Atuação</div>
+      <div class="eyebrow" lang="en">What I do</div>
       <div class="offers">
         <div class="offer">
-          <h3>Assumir um app existente</h3>
-          <p>Código herdado de outro time ou de uma agência que saiu. Atualização de Flutter e dependências, correção de build quebrado, redução de crashes e retomada da cadência de entrega.</p>
+          <h3 lang="pt">Assumir um app existente</h3>
+          <h3 lang="en">Take over an existing app</h3>
+          <p lang="pt">Código herdado de outro time ou de uma agência que saiu. Atualização de Flutter e dependências, correção de build quebrado, redução de crashes e retomada da cadência de entrega.</p>
+          <p lang="en">Code inherited from another team or from an agency that walked away. Flutter and dependency upgrades, broken build recovery, crash reduction and restoring delivery cadence.</p>
         </div>
         <div class="offer">
-          <h3>Construir do zero até a loja</h3>
-          <p>Arquitetura, design system, gerenciamento de estado, integração com APIs e publicação em App Store e Google Play, com CI/CD e ambientes separados desde o primeiro dia.</p>
+          <h3 lang="pt">Construir do zero até a loja</h3>
+          <h3 lang="en">Build from scratch to the store</h3>
+          <p lang="pt">Arquitetura, design system, gerenciamento de estado, integração com APIs e publicação em App Store e Google Play, com CI/CD e ambientes separados desde o primeiro dia.</p>
+          <p lang="en">Architecture, design system, state management, API integration and release to the App Store and Google Play, with CI/CD and separate environments from day one.</p>
         </div>
         <div class="offer">
-          <h3>Evoluir e manter em produção</h3>
-          <p>Features novas, release contínuo, observabilidade e as exigências que Apple e Google criam a cada ano. A parte que começa depois que o app fica pronto.</p>
+          <h3 lang="pt">Evoluir e manter em produção</h3>
+          <h3 lang="en">Evolve and maintain in production</h3>
+          <p lang="pt">Features novas, release contínuo, observabilidade e as exigências que Apple e Google criam a cada ano. A parte que começa depois que o app fica pronto.</p>
+          <p lang="en">New features, continuous releases, observability and the requirements Apple and Google add every year. The part that starts after the app is done.</p>
         </div>
       </div>
     </section>
 
     <section id="projetos">
-      <div class="eyebrow">Projetos</div>
+      <div class="eyebrow" lang="pt">Projetos</div>
+      <div class="eyebrow" lang="en">Projects</div>
 
       <div class="cases">
 
@@ -497,10 +573,15 @@
             <img class="appicon" src="assets/natrave-icon.png" alt="Ícone do NaTrave!" width="160" height="160">
             <div>
               <h3><a href="https://app.natrave.com.br/" target="_blank" rel="noopener">NaTrave!</a></h3>
-              <div class="case-meta">
+              <div class="case-meta" lang="pt">
               <span>Produto próprio</span>
               <span>Android e iOS</span>
               <span>2024 até hoje</span>
+              </div>
+              <div class="case-meta" lang="en">
+                <span>Own product</span>
+                <span>Android and iOS</span>
+                <span>2024 to date</span>
               </div>
             </div>
           </div>
@@ -511,16 +592,19 @@
           </div>
           <div class="case-body">
             <div class="block">
-              <h4>Contexto</h4>
-              <p>Plataforma de gestão de campeonatos de futebol amador. Um único desenvolvedor responsável pelo aplicativo, das decisões de produto à publicação nas lojas.</p>
+              <h4 lang="pt">Contexto</h4><h4 lang="en">Context</h4>
+              <p lang="pt">Plataforma de gestão de campeonatos de futebol amador. Um único desenvolvedor responsável pelo aplicativo, das decisões de produto à publicação nas lojas.</p>
+              <p lang="en">Platform for managing amateur football tournaments. A single developer responsible for the app, from product decisions to store releases.</p>
             </div>
             <div class="block">
-              <h4>O que foi feito</h4>
-              <p>Arquitetura, design system e integração de ponta a ponta. Pipeline de CI/CD, flavors separados de desenvolvimento e produção nos dois sistemas, push notifications, remote config, login social, deep links e mapas.</p>
+              <h4 lang="pt">O que foi feito</h4><h4 lang="en">What I did</h4>
+              <p lang="pt">Arquitetura, design system e integração de ponta a ponta. Pipeline de CI/CD, flavors separados de desenvolvimento e produção nos dois sistemas, push notifications, remote config, login social, deep links e mapas.</p>
+              <p lang="en">Architecture, design system and end-to-end integration. CI/CD pipeline, separate dev and production flavors on both platforms, push notifications, remote config, social sign-in, deep links and maps.</p>
             </div>
             <div class="block">
-              <h4>Resultado</h4>
-              <p>Mais de duzentas versões publicadas em App Store e Google Play ao longo de quase dois anos ininterruptos, com taxa de sessões sem falhas acima de 99%.</p>
+              <h4 lang="pt">Resultado</h4><h4 lang="en">Outcome</h4>
+              <p lang="pt">Mais de duzentas versões publicadas em App Store e Google Play ao longo de quase dois anos ininterruptos, com taxa de sessões sem falhas acima de 99%.</p>
+              <p lang="en">Over two hundred releases published to the App Store and Google Play across nearly two uninterrupted years, with a crash-free session rate above 99%.</p>
             </div>
           </div>
         </article>
@@ -530,11 +614,17 @@
             <img class="appicon" src="assets/copel-icon.png" alt="Ícone do app da Copel" width="160" height="160">
             <div>
               <h3><a href="https://play.google.com/store/apps/details?id=com.copel.mbf" target="_blank" rel="noopener">Copel</a></h3>
-              <div class="case-meta">
+              <div class="case-meta" lang="pt">
               <span>Concessionária de energia</span>
               <span>Android e iOS</span>
               <span>2021 a 2022</span>
               <span><b class="rating">4,8</b> na Play Store, 29,5 mil avaliações</span>
+              </div>
+              <div class="case-meta" lang="en">
+                <span>Energy utility</span>
+                <span>Android and iOS</span>
+                <span>2021 to 2022</span>
+                <span><b class="rating">4.8</b> on the Play Store, 29.5k ratings</span>
               </div>
             </div>
           </div>
@@ -545,16 +635,19 @@
           </div>
           <div class="case-body">
             <div class="block">
-              <h4>Contexto</h4>
-              <p>Aplicativo de uma concessionária de energia com milhões de clientes atendidos, em produção nas duas lojas. Os desenvolvedores seniores responsáveis deixaram o projeto.</p>
+              <h4 lang="pt">Contexto</h4><h4 lang="en">Context</h4>
+              <p lang="pt">Aplicativo de uma concessionária de energia com milhões de clientes atendidos, em produção nas duas lojas. Os desenvolvedores seniores responsáveis deixaram o projeto.</p>
+              <p lang="en">App for an energy utility serving millions of customers, live on both stores. The senior developers responsible for it left the project.</p>
             </div>
             <div class="block">
-              <h4>O que foi feito</h4>
-              <p>Projeto assumido sozinho, com entregas e manutenção mantidas sem interrupção e reporte direto ao PO e às demais lideranças, além da transferência de contexto técnico para os desenvolvedores que chegaram depois.</p>
+              <h4 lang="pt">O que foi feito</h4><h4 lang="en">What I did</h4>
+              <p lang="pt">Projeto assumido sozinho, com entregas e manutenção mantidas sem interrupção e reporte direto ao PO e às demais lideranças, além da transferência de contexto técnico para os desenvolvedores que chegaram depois.</p>
+              <p lang="en">Took the project over alone, keeping delivery and maintenance running without interruption and reporting directly to the PO and leadership, plus handing over technical context to the developers who came later.</p>
             </div>
             <div class="block">
-              <h4>Resultado</h4>
-              <p>Continuidade preservada em um app de missão crítica sem janela de parada, e promoção de júnior a pleno durante o período.</p>
+              <h4 lang="pt">Resultado</h4><h4 lang="en">Outcome</h4>
+              <p lang="pt">Continuidade preservada em um app de missão crítica sem janela de parada, e promoção de júnior a pleno durante o período.</p>
+              <p lang="en">Continuity preserved on a mission-critical app with no downtime window, and a promotion from junior to mid-level during the period.</p>
             </div>
           </div>
         </article>
@@ -564,10 +657,15 @@
             <img class="appicon" src="assets/left-icon.png" alt="Ícone do Left" width="160" height="160">
             <div>
               <h3><a href="https://apps.apple.com/br/app/left/id6444623738" target="_blank" rel="noopener">Left</a></h3>
-              <div class="case-meta">
+              <div class="case-meta" lang="pt">
               <span>Banco digital</span>
               <span>Android e iOS</span>
               <span>2022 a 2025</span>
+              </div>
+              <div class="case-meta" lang="en">
+                <span>Digital bank</span>
+                <span>Android and iOS</span>
+                <span>2022 to 2025</span>
               </div>
             </div>
           </div>
@@ -578,16 +676,19 @@
           </div>
           <div class="case-body">
             <div class="block">
-              <h4>Contexto</h4>
-              <p>Operação bancária nova, sem aplicativo e sem stack definida. O produto precisava sair do papel e chegar às lojas com funcionalidades financeiras completas.</p>
+              <h4 lang="pt">Contexto</h4><h4 lang="en">Context</h4>
+              <p lang="pt">Operação bancária nova, sem aplicativo e sem stack definida. O produto precisava sair do papel e chegar às lojas com funcionalidades financeiras completas.</p>
+              <p lang="en">A new banking operation, with no app and no defined stack. The product had to go from paper to the stores with full financial features.</p>
             </div>
             <div class="block">
-              <h4>O que foi feito</h4>
-              <p>Participação desde a fundação da operação, na escolha das tecnologias e na definição dos padrões de desenvolvimento do time. Entrega de Pix, transferências, extrato e cuponagem, com code review e decisões de arquitetura como referência técnica.</p>
+              <h4 lang="pt">O que foi feito</h4><h4 lang="en">What I did</h4>
+              <p lang="pt">Participação desde a fundação da operação, na escolha das tecnologias e na definição dos padrões de desenvolvimento do time. Entrega de Pix, transferências, extrato e cuponagem, com code review e decisões de arquitetura como referência técnica.</p>
+              <p lang="en">Involved from the founding of the operation, in choosing the technologies and defining the team’s development standards. Shipped Pix instant payments, transfers, statements and coupons, acting as technical reference on code review and architecture decisions.</p>
             </div>
             <div class="block">
-              <h4>Resultado</h4>
-              <p>Aplicativo publicado e em operação nas duas lojas, e progressão de pleno a sênior dentro do mesmo produto.</p>
+              <h4 lang="pt">Resultado</h4><h4 lang="en">Outcome</h4>
+              <p lang="pt">Aplicativo publicado e em operação nas duas lojas, e progressão de pleno a sênior dentro do mesmo produto.</p>
+              <p lang="en">App published and running on both stores, and a progression from mid-level to senior within the same product.</p>
             </div>
           </div>
         </article>
@@ -595,7 +696,8 @@
     </section>
 
     <section>
-      <div class="eyebrow">Outros aplicativos em produção</div>
+      <div class="eyebrow" lang="pt">Outros aplicativos em produção</div>
+      <div class="eyebrow" lang="en">Other apps in production</div>
       <div class="minis">
 
         <article class="mini">
@@ -603,10 +705,12 @@
             <img class="appicon" src="assets/genial-icon.png" alt="Ícone da Genial Investimentos" width="160" height="160">
             <div>
               <b><a href="https://apps.apple.com/br/app/genial-investimentos/id1501881719" target="_blank" rel="noopener">Genial Investimentos</a></b>
-              <span>INVESTIMENTOS · <b class="rating">4,6</b> NA APP STORE, 7,9 MIL AVALIAÇÕES</span>
+              <span lang="pt">INVESTIMENTOS · <b class="rating">4,6</b> NA APP STORE, 7,9 MIL AVALIAÇÕES</span>
+              <span lang="en">INVESTMENTS · <b class="rating">4.6</b> ON THE APP STORE, 7.9K RATINGS</span>
             </div>
           </header>
-          <p>Contribuição no módulo de câmbio.</p>
+          <p lang="pt">Contribuição no módulo de câmbio.</p>
+          <p lang="en">Contributed to the foreign exchange module.</p>
           <div class="shots sm">
             <img src="assets/genial-1.jpg" alt="Tela da Genial Investimentos" loading="lazy" width="258" height="460">
             <img src="assets/genial-2.jpg" alt="Tela da Genial Investimentos" loading="lazy" width="258" height="460">
@@ -619,10 +723,12 @@
             <img class="appicon" src="assets/cabana-icon.png" alt="Ícone do Cabana Burger" width="160" height="160">
             <div>
               <b><a href="https://play.google.com/store/apps/details?id=cabana.alphacode.com.br" target="_blank" rel="noopener">Cabana Burger</a></b>
-              <span>VAREJO · TAMBÉM NO APP DO HABIB'S</span>
+              <span lang="pt">VAREJO · TAMBÉM NO APP DO HABIB'S</span>
+              <span lang="en">RETAIL · ALSO ON THE HABIB'S APP</span>
             </div>
           </header>
-          <p>Evolução de features e manutenção, durante atuação em software house.</p>
+          <p lang="pt">Evolução de features e manutenção, durante atuação em software house.</p>
+          <p lang="en">Feature work and maintenance, while working at a software house.</p>
           <div class="shots sm">
             <img src="assets/cabana-1.jpg" alt="Tela do Cabana Burger" loading="lazy" width="224" height="460">
             <img src="assets/cabana-2.jpg" alt="Tela do Cabana Burger" loading="lazy" width="224" height="460">
@@ -652,45 +758,49 @@
     </section>
 
     <section id="trajetoria">
-      <div class="eyebrow">Trajetória</div>
+      <div class="eyebrow" lang="pt">Trajetória</div>
+      <div class="eyebrow" lang="en">Timeline</div>
       <div class="track">
         <div class="stop">
-          <time>2024 — hoje</time>
-          <div><b>Desenvolvedor Mobile Sênior e Cofundador</b><span>NaTrave!</span></div>
+          <time lang="pt">2024 — hoje</time><time lang="en">2024 — present</time>
+          <div><b lang="pt">Desenvolvedor Mobile Sênior e Cofundador</b><b lang="en">Senior Mobile Developer and Co-founder</b><span>NaTrave!</span></div>
         </div>
         <div class="stop">
           <time>2023 — 2025</time>
-          <div><b>Desenvolvedor Mobile Sênior</b><span>Left</span></div>
+          <div><b lang="pt">Desenvolvedor Mobile Sênior</b><b lang="en">Senior Mobile Developer</b><span>Left</span></div>
         </div>
         <div class="stop">
           <time>2022 — 2023</time>
-          <div><b>Desenvolvedor Mobile Pleno</b><span>Left</span></div>
+          <div><b lang="pt">Desenvolvedor Mobile Pleno</b><b lang="en">Mobile Developer</b><span>Left</span></div>
         </div>
         <div class="stop">
           <time>2022</time>
-          <div><b>Desenvolvedor Mobile Pleno</b><span>Datainfo, no aplicativo da Copel</span></div>
+          <div><b lang="pt">Desenvolvedor Mobile Pleno</b><b lang="en">Mobile Developer</b><span lang="pt">Datainfo, no aplicativo da Copel</span><span lang="en">Datainfo, on the Copel app</span></div>
         </div>
         <div class="stop">
           <time>2021 — 2022</time>
-          <div><b>Desenvolvedor Mobile Júnior</b><span>Datainfo, no aplicativo da Copel</span></div>
+          <div><b lang="pt">Desenvolvedor Mobile Júnior</b><b lang="en">Junior Mobile Developer</b><span lang="pt">Datainfo, no aplicativo da Copel</span><span lang="en">Datainfo, on the Copel app</span></div>
         </div>
         <div class="stop">
           <time>2021</time>
-          <div><b>Desenvolvedor Mobile Júnior</b><span>Alphacode IT Solutions</span></div>
+          <div><b lang="pt">Desenvolvedor Mobile Júnior</b><b lang="en">Junior Mobile Developer</b><span>Alphacode IT Solutions</span></div>
         </div>
       </div>
     </section>
 
     <section id="contato" class="contact">
-      <div class="eyebrow">Contato</div>
-      <p>Disponível para projetos de escopo definido e contratos de manutenção contínua, em regime de meio período. Conversas por texto são bem-vindas.</p>
+      <div class="eyebrow" lang="pt">Contato</div>
+      <div class="eyebrow" lang="en">Contact</div>
+      <p lang="pt">Disponível para projetos de escopo definido e contratos de manutenção contínua. Conversas por texto são bem-vindas.</p>
+      <p lang="en">Available for scoped projects and ongoing maintenance contracts. Happy to talk over text.</p>
       <div class="actions">
         <a class="btn primary" href="mailto:thiago.amorimsilva38@gmail.com">thiago.amorimsilva38@gmail.com</a>
         <a class="btn" href="https://www.linkedin.com/in/th38amorim" target="_blank" rel="noopener">linkedin.com/in/th38amorim</a>
       </div>
     </section>
 
-    <footer>Thiago Amorim · Desenvolvedor mobile sênior · Flutter, iOS e Android</footer>
+    <footer lang="pt">Thiago Amorim · Desenvolvedor mobile sênior · Flutter, iOS e Android</footer>
+    <footer lang="en">Thiago Amorim · Senior mobile developer · Flutter, iOS and Android</footer>
 
   </main>
 </div>
