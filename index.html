@@ -109,21 +109,35 @@
   html[data-lang="pt"] [lang="en"] { display: none !important; }
   html[data-lang="en"] [lang="pt"] { display: none !important; }
 
-  .langbtn {
+  .langpick {
     align-self: flex-start;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .08em;
-    padding: 5px 11px;
+    display: inline-flex;
     border: 1px solid var(--hair);
-    border-radius: 2px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--raised);
+  }
+  .lang {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .11em;
+    padding: 6px 13px;
+    border: 0;
     background: transparent;
     color: var(--muted);
     cursor: pointer;
-    transition: border-color .15s ease, color .15s ease;
+    line-height: 1;
+    transition: color .16s ease, background-color .16s ease;
   }
-  .langbtn:hover { border-color: var(--accent); color: var(--accent-ink); }
-  .langbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .lang + .lang { border-left: 1px solid var(--hair); }
+  .lang:hover { color: var(--ink); }
+  .lang:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  html[data-lang="pt"] .lang[data-set="pt"],
+  html[data-lang="en"] .lang[data-set="en"] {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
 
   /* ---------------- shell ---------------- */
   .shell {
@@ -444,17 +458,17 @@
     document.title = l === 'pt'
       ? 'Thiago Amorim \u00b7 Desenvolvedor Mobile S\u00eanior'
       : 'Thiago Amorim \u00b7 Senior Mobile Developer';
-    var b = document.getElementById('langbtn');
-    if (b) {
-      b.textContent = l === 'pt' ? 'EN' : 'PT';
-      b.setAttribute('aria-label', l === 'pt' ? 'Switch to English' : 'Mudar para portugu\u00eas');
+    var btns = document.querySelectorAll('.lang[data-set]');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].setAttribute('aria-pressed', btns[i].getAttribute('data-set') === l ? 'true' : 'false');
     }
   }
 
   document.addEventListener('click', function (e) {
-    var t = e.target;
-    if (!t || t.id !== 'langbtn') return;
-    var next = document.documentElement.getAttribute('data-lang') === 'pt' ? 'en' : 'pt';
+    var t = e.target && e.target.closest ? e.target.closest('.lang[data-set]') : null;
+    if (!t) return;
+    var next = t.getAttribute('data-set');
+    if (next === document.documentElement.getAttribute('data-lang')) return;
     try { localStorage.setItem(KEY, next); } catch (err) {}
     apply(next);
   });
@@ -476,7 +490,10 @@
         <div class="rail-role" lang="en">Senior<br>mobile developer<br>Flutter · iOS · Android</div>
       </div>
 
-      <button type="button" id="langbtn" class="langbtn">EN</button>
+      <div class="langpick" role="group" aria-label="Idioma / Language">
+        <button type="button" class="lang" data-set="pt">PT</button>
+        <button type="button" class="lang" data-set="en">EN</button>
+      </div>
 
       <nav>
         <ul>
