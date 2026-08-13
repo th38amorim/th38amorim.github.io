@@ -210,6 +210,44 @@
   .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
   .btn.primary:hover { color: var(--on-accent); opacity: .88; }
 
+
+  /* ---------- visuais ---------- */
+  .iconwall { display: flex; flex-wrap: wrap; gap: 13px; align-items: center; }
+  .iconwall img {
+    width: 50px; height: 50px; border-radius: 12px;
+    border: 1px solid var(--hair); background: var(--raised); display: block;
+  }
+  .iconwall p { font-size: 13.5px; color: var(--muted); margin-left: 6px; max-width: 22ch; }
+
+  .shots {
+    display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px;
+    scroll-snap-type: x proximity; scrollbar-width: thin;
+  }
+  .shots img {
+    height: 296px; width: auto; flex: none; display: block;
+    border-radius: 11px; border: 1px solid var(--hair);
+    background: var(--raised); scroll-snap-align: start;
+  }
+  .shots.sm img { height: 216px; }
+
+  .case-head { flex-direction: row; align-items: center; gap: 14px; }
+  .appicon {
+    width: 46px; height: 46px; border-radius: 11px; flex: none;
+    border: 1px solid var(--hair); background: var(--raised); display: block;
+  }
+  .case-head > div { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .rating { color: var(--accent-ink); }
+
+  .minis { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+  .mini { display: flex; flex-direction: column; gap: 12px; }
+  .mini header { display: flex; align-items: center; gap: 12px; }
+  .mini header div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .mini b { font-size: 16px; font-weight: 600; }
+  .mini header span {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .03em; color: var(--muted);
+  }
+  .mini p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
+
   /* metrics */
   .metrics {
     display: grid;
@@ -260,7 +298,7 @@
   .case { padding: 26px 0; border-top: 1px solid var(--hair); display: flex; flex-direction: column; gap: 14px; }
   .case:last-child { border-bottom: 1px solid var(--hair); }
 
-  .case-head { display: flex; flex-direction: column; gap: 6px; }
+  .case-head { display: flex; }
   .case-head h3 { font-size: 25px; letter-spacing: -.012em; }
   .case-meta {
     font-family: var(--mono);
@@ -366,7 +404,8 @@
     main { padding: 40px 0 64px; gap: 52px; }
     .stop { grid-template-columns: 1fr; gap: 2px; }
     .stop time { padding-top: 0; }
-    .app b { min-width: 0; flex-basis: 100%; }
+    .shots img { height: 250px; }
+    .shots.sm img { height: 190px; }
   }
 </style>
 
@@ -409,6 +448,18 @@
       </div>
     </section>
 
+
+    <section>
+      <div class="iconwall">
+        <img src="assets/natrave-icon.png" alt="Ícone do NaTrave!" width="160" height="160">
+        <img src="assets/copel-icon.png" alt="Ícone do app da Copel" width="160" height="160">
+        <img src="assets/left-icon.png" alt="Ícone do Left" width="160" height="160">
+        <img src="assets/genial-icon.png" alt="Ícone da Genial Investimentos" width="160" height="160">
+        <img src="assets/cabana-icon.png" alt="Ícone do Cabana Burger" width="160" height="160">
+        <p>Cinco aplicativos publicados e mantidos em produção.</p>
+      </div>
+    </section>
+
     <section>
       <div class="metrics">
         <div class="metric"><b>6</b><span>anos em Flutter</span></div>
@@ -443,12 +494,20 @@
 
         <article class="case">
           <div class="case-head">
-            <h3><a href="https://app.natrave.com.br/" target="_blank" rel="noopener">NaTrave!</a></h3>
-            <div class="case-meta">
+            <img class="appicon" src="assets/natrave-icon.png" alt="Ícone do NaTrave!" width="160" height="160">
+            <div>
+              <h3><a href="https://app.natrave.com.br/" target="_blank" rel="noopener">NaTrave!</a></h3>
+              <div class="case-meta">
               <span>Produto próprio</span>
               <span>Android e iOS</span>
               <span>2024 até hoje</span>
+              </div>
             </div>
+          </div>
+          <div class="shots">
+            <img src="assets/natrave-1.jpg" alt="Tela do NaTrave!" loading="lazy" width="211" height="460">
+            <img src="assets/natrave-2.jpg" alt="Tela do NaTrave!" loading="lazy" width="211" height="460">
+            <img src="assets/natrave-3.jpg" alt="Tela do NaTrave!" loading="lazy" width="211" height="460">
           </div>
           <div class="case-body">
             <div class="block">
@@ -468,12 +527,21 @@
 
         <article class="case">
           <div class="case-head">
-            <h3>Copel</h3>
-            <div class="case-meta">
+            <img class="appicon" src="assets/copel-icon.png" alt="Ícone do app da Copel" width="160" height="160">
+            <div>
+              <h3><a href="https://play.google.com/store/apps/details?id=com.copel.mbf" target="_blank" rel="noopener">Copel</a></h3>
+              <div class="case-meta">
               <span>Concessionária de energia</span>
               <span>Android e iOS</span>
               <span>2021 a 2022</span>
+              <span><b class="rating">4,8</b> na Play Store, 29,5 mil avaliações</span>
+              </div>
             </div>
+          </div>
+          <div class="shots">
+            <img src="assets/copel-1.jpg" alt="Tela do app da Copel" loading="lazy" width="258" height="460">
+            <img src="assets/copel-2.jpg" alt="Tela do app da Copel" loading="lazy" width="258" height="460">
+            <img src="assets/copel-3.jpg" alt="Tela do app da Copel" loading="lazy" width="258" height="460">
           </div>
           <div class="case-body">
             <div class="block">
@@ -493,12 +561,20 @@
 
         <article class="case">
           <div class="case-head">
-            <h3>Left</h3>
-            <div class="case-meta">
+            <img class="appicon" src="assets/left-icon.png" alt="Ícone do Left" width="160" height="160">
+            <div>
+              <h3><a href="https://apps.apple.com/br/app/left/id6444623738" target="_blank" rel="noopener">Left</a></h3>
+              <div class="case-meta">
               <span>Banco digital</span>
               <span>Android e iOS</span>
               <span>2022 a 2025</span>
+              </div>
             </div>
+          </div>
+          <div class="shots">
+            <img src="assets/left-1.jpg" alt="Tela do Left" loading="lazy" width="211" height="460">
+            <img src="assets/left-2.jpg" alt="Tela do Left" loading="lazy" width="211" height="460">
+            <img src="assets/left-3.jpg" alt="Tela do Left" loading="lazy" width="211" height="460">
           </div>
           <div class="case-body">
             <div class="block">
@@ -520,22 +596,40 @@
 
     <section>
       <div class="eyebrow">Outros aplicativos em produção</div>
-      <div class="apps">
-        <div class="app">
-          <b>Genial Investimentos</b>
-          <span>Plataforma de investimentos. Contribuição no módulo de câmbio.</span>
-          <i>Fintech</i>
-        </div>
-        <div class="app">
-          <b>Cabana Burger</b>
-          <span>Aplicativo de pedidos da rede. Evolução de features e manutenção.</span>
-          <i>Varejo</i>
-        </div>
-        <div class="app">
-          <b>Habib's</b>
-          <span>Aplicativo da rede. Evolução de features e manutenção.</span>
-          <i>Varejo</i>
-        </div>
+      <div class="minis">
+
+        <article class="mini">
+          <header>
+            <img class="appicon" src="assets/genial-icon.png" alt="Ícone da Genial Investimentos" width="160" height="160">
+            <div>
+              <b><a href="https://apps.apple.com/br/app/genial-investimentos/id1501881719" target="_blank" rel="noopener">Genial Investimentos</a></b>
+              <span>INVESTIMENTOS · <b class="rating">4,6</b> NA APP STORE, 7,9 MIL AVALIAÇÕES</span>
+            </div>
+          </header>
+          <p>Contribuição no módulo de câmbio.</p>
+          <div class="shots sm">
+            <img src="assets/genial-1.jpg" alt="Tela da Genial Investimentos" loading="lazy" width="258" height="460">
+            <img src="assets/genial-2.jpg" alt="Tela da Genial Investimentos" loading="lazy" width="258" height="460">
+            <img src="assets/genial-3.jpg" alt="Tela da Genial Investimentos" loading="lazy" width="258" height="460">
+          </div>
+        </article>
+
+        <article class="mini">
+          <header>
+            <img class="appicon" src="assets/cabana-icon.png" alt="Ícone do Cabana Burger" width="160" height="160">
+            <div>
+              <b><a href="https://play.google.com/store/apps/details?id=cabana.alphacode.com.br" target="_blank" rel="noopener">Cabana Burger</a></b>
+              <span>VAREJO · TAMBÉM NO APP DO HABIB'S</span>
+            </div>
+          </header>
+          <p>Evolução de features e manutenção, durante atuação em software house.</p>
+          <div class="shots sm">
+            <img src="assets/cabana-1.jpg" alt="Tela do Cabana Burger" loading="lazy" width="224" height="460">
+            <img src="assets/cabana-2.jpg" alt="Tela do Cabana Burger" loading="lazy" width="224" height="460">
+            <img src="assets/cabana-3.jpg" alt="Tela do Cabana Burger" loading="lazy" width="224" height="460">
+          </div>
+        </article>
+
       </div>
     </section>
 
